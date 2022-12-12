@@ -171,7 +171,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000012825293744, guid: 73ea9d6c6c3480147ba658fc59d0afa4, type: 3}
       propertyPath: m_Name
-      value: Exploder 8
+      value: Bullet
       objectReference: {fileID: 0}
     - target: {fileID: 4000014042746218, guid: 73ea9d6c6c3480147ba658fc59d0afa4, type: 3}
       propertyPath: m_RootOrder
@@ -294,18 +294,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7195935406719601113}
   m_PrefabAsset: {fileID: 0}
---- !u!75 &4524124242418936565
-ConstantForce:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7196352677303122537}
-  m_Enabled: 0
-  m_Force: {x: 0, y: 0, z: -0.5}
-  m_RelativeForce: {x: 0, y: 0, z: 0}
-  m_Torque: {x: 0, y: 0, z: 0}
-  m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!114 &1243562908899366018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,7 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0, z: -0.5}
-  radius: 0.2
+  radius: 0.1
 --- !u!114 &7466469599020591032
 MonoBehaviour:
   m_ObjectHideFlags: 0

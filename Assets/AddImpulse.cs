@@ -17,7 +17,10 @@ public class AddImpulse : MonoBehaviour
         
     }
 
-    void OnEnable() => AddRandom();
+    void OnEnable() {
+        Debug.LogWarning("XXX: OnEnable");
+        AddRandom();
+    }
 
     public void AddRandom() {
         Vector3 eps = new Vector3(UnityEngine.Random.Range(-radius, radius),
