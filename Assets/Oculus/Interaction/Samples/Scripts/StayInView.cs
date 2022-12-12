@@ -31,15 +31,16 @@ namespace Oculus.Interaction.Samples
         private float _extraDistanceForward = 0;
 
         [SerializeField]
-        private bool _zeroOutEyeHeight = true;
+        private float _extraDistanceUp = 0;
+
         void Update()
         {
             transform.rotation = Quaternion.identity;
             transform.position = _eyeCenter.position;
             transform.Rotate(0, _eyeCenter.rotation.eulerAngles.y, 0, Space.Self);
             transform.position = _eyeCenter.position + transform.forward.normalized * _extraDistanceForward;
-            if (_zeroOutEyeHeight)
-                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            if (_extraDistanceUp != 0)
+                transform.position = new Vector3(transform.position.x, _extraDistanceUp, transform.position.z);
         }
     }
 }

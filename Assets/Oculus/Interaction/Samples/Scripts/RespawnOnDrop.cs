@@ -29,6 +29,9 @@ namespace Oculus.Interaction.Samples
         private float _yThresholdForRespawn;
 
         [SerializeField]
+        private float _zThresholdForRespawn;
+
+        [SerializeField]
         private UnityEvent _whenRespawned = new UnityEvent();
 
         public UnityEvent WhenRespawned => _whenRespawned;
@@ -52,7 +55,7 @@ namespace Oculus.Interaction.Samples
 
         protected virtual void Update()
         {
-            if (transform.position.y < _yThresholdForRespawn)
+            if (transform.position.y < _yThresholdForRespawn || transform.position.z < _zThresholdForRespawn)
             {
                 transform.position = _initialPosition;
                 transform.rotation = _initialRotation;

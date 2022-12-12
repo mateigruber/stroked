@@ -31,6 +31,8 @@ public class TeleportPoint : MonoBehaviour {
     public Transform destTransform;
 
     private float lastLookAtTime = 0;
+    private bool isLookingAt = false;
+    private bool isChangingExercise = false;
 
 
 
@@ -49,12 +51,45 @@ public class TeleportPoint : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        float intensity = Mathf.SmoothStep(fullIntensity, lowIntensity, (Time.time - lastLookAtTime) * dimmingSpeed);
-        GetComponent<MeshRenderer>().material.SetFloat("_Intensity", intensity);
+        if (isLookingAt) {
+            float intensity = Mathf.SmoothStep(lowIntensity, fullIntensity, (Time.time - lastLookAtTime) * dimmingSpeed);
+            GetComponent<MeshRenderer>().material.SetFloat("_Intensity", intensity);
+
+            if (Mathf.Approximately(intensity, fullIntensity)) {
+                // Perform teleportation.
+                // TODO(mgruber): Add fade effect.
+                Debug.LogWarning("XXX: isChangingExercise " + isChangingExercise);
+                if (isChangingExercise) {
+                    return;
+                }
+                isChangingExercise = true;
+                StartCoroutine(GoToNextExercise(destTransform.position, destTransform.rotation, /*waitTime=*/ 0.5f));
+            }
+        }
 	}
 
     public void OnLookAt()
     {
         lastLookAtTime = Time.time;
+        isLookingAt = true;
+    }
+
+    public void OnLookAway() {
+        isLookingAt = false;
+        GetComponent<MeshRenderer>().material.SetFloat("_Intensity", lowIntensity);
+    }
+
+    private IEnumerator GoToNextExercise(Vector3 position, Quaternion rotation, float waitTime) {
+        yield return new WaitForSeconds(waitTime);
+        FindObjectOfType<OVRCameraRig>().transform.position = position;
+        FindObjectOfType<OVRCameraRig>().transform.rotation = rotation;
+        yield return new WaitForSeconds(waitTime);
+
+        // TODO(mgruber): Pass the whole transform.
+        FindObjectOfType<ExerciseManager>().InstantiateNextExerciseAt(position, rotation);
+        isChangingExercise = false;
+        // The hand might still be placed in the teleport object even after changing the scene,
+        // until it's position is re-computed based on the OVRCamerRig.
+        OnLookAway();
     }
 }
